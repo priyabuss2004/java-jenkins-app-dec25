@@ -61,7 +61,7 @@ stage("Building the application"){
         }
      }
 
-     stage('Connect to EC2 ') {
+     stage('Connect to EC2 & Deployon on Minikube ') {
             steps {
                      
                     withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
