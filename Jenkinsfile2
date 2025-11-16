@@ -63,17 +63,13 @@ stage("Building the application"){
 
      stage('Connect to EC2 ') {
             steps {
-                     sshagent(['ec2-ssh-key']) {
-                       sh '''
-                         EC2_HOST='65.0.100.41'
-  
-                        # Test SSH connection
-                        ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST "echo Connected to EC2"
-                     '''
-                   
-                }
-            }
+                     
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                    sh "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ubuntu@65.0.100.41 'echo Connected to EC2'"
+                  }
           }
+     }
+          
 
 
 } // end of stages
